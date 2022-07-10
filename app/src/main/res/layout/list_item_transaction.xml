@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp"
+        android:weightSum="10">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/transaction_type"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:civ_border_width="1dp" />
+
+        <LinearLayout
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/transaction_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:text="20/5/2022 9:21"
+                android:textSize="@dimen/_21sdp" />
+
+            <TextView
+                android:id="@+id/transaction_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+optio, eaque rerum! Provident"
+                android:textSize="@dimen/_21sdp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/transaction_amount"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="500$"
+            android:textSize="@dimen/_32sdp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</layout>
