@@ -21,14 +21,22 @@
         android:id="@+id/homeFragment"
         android:name="com.lightfeather.wide_awakefinancials.ui.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addCategoryDialog"
             app:destination="@id/addCategoryDialog" />
+        <action
+            android:id="@+id/action_homeFragment_to_addTransactionDialog"
+            app:destination="@id/addTransactionDialog" />
     </fragment>
     <dialog
         android:id="@+id/addCategoryDialog"
         android:name="com.lightfeather.wide_awakefinancials.ui.addcategory.AddCategoryDialog"
         android:label="AddCategoryDialog"
         tools:layout="@layout/dialog_add_category" />
+    <dialog
+        android:id="@+id/addTransactionDialog"
+        android:name="com.lightfeather.wide_awakefinancials.ui.addtransaction.AddTransactionDialog"
+        android:label="AddTransactionDialog"
+        tools:layout="@layout/dialog_add_transaction" />
 </navigation>

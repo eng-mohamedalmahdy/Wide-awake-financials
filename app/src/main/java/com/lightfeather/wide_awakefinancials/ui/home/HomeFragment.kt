@@ -69,6 +69,8 @@ class HomeFragment : Fragment() {
                 setupVisibility(fabExpanded)
                 startAnimation(fabExpanded)
                 fabExpanded = !fabExpanded
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionDialog())
+
             }
             addCategory.setOnClickListener {
                 setupVisibility(fabExpanded)

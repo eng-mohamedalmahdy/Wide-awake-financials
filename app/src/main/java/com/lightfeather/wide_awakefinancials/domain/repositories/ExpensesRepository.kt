@@ -13,12 +13,30 @@ class ExpensesRepository(private val transactionsDAO: TransactionsDAO) {
         )
 
     fun getIncomeData(): List<FinancialTransaction> =
-        listOf(FinancialTransaction( 1, "B", 111, 20.0, TransactionType.INCOME))
+        listOf(FinancialTransaction(1, "B", 111, 20.0, TransactionType.INCOME))
 
     suspend fun addTransactionCategory(name: String, color: Int) {
         val hexColor = java.lang.String.format("#%06X", 0xFFFFFF and color)
         val category = TransactionCategory(name = name, color = hexColor)
         transactionsDAO.insertTransactionCategory(category)
     }
+
+    fun addTransaction(
+        desc: String,
+        categoryId: Int,
+        amount: Double,
+        transactionType: TransactionType
+    ) {
+        val transaction = FinancialTransaction(
+            categoryId,
+            desc,
+            System.currentTimeMillis(),
+            amount,
+            transactionType
+        )
+        transactionsDAO.insertTransaction(transaction)
+    }
+
+    fun getTransactionCategories() = transactionsDAO.getAllTransactionCategories()
 
 }

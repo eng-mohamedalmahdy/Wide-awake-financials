@@ -3,6 +3,7 @@ package com.lightfeather.wide_awakefinancials.domain.persistence
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.lightfeather.wide_awakefinancials.domain.model.FinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionCategory
 import kotlinx.coroutines.flow.Flow
 
@@ -13,4 +14,7 @@ interface TransactionsDAO {
 
     @Query("SELECT * FROM TransactionCategory")
     fun getAllTransactionCategories(): Flow<List<TransactionCategory>>
+
+    @Insert
+    fun insertTransaction(transaction: FinancialTransaction)
 }
