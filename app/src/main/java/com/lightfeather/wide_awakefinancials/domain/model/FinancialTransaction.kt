@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey
         entity = TransactionCategory::class,
         parentColumns = arrayOf("category_id"),
         childColumns = arrayOf("sourceId"),
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.NO_ACTION,
+        onUpdate = ForeignKey.SET_NULL
     )]
 )
 data class FinancialTransaction(
@@ -20,6 +21,6 @@ data class FinancialTransaction(
     val type: TransactionType,
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var id: Int? = null
 
 }

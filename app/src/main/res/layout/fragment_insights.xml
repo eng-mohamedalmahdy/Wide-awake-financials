@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:background="?colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="vertical"
+            tools:context=".ui.insights.InsightsFragment">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/insights"
+                android:textSize="@dimen/_24sdp" />
+
+            <TextView
+                android:id="@+id/insights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/placeholder"
+                android:textSize="@dimen/_18sdp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/expenses_summery"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_margin="@dimen/_8sdp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/income_summery"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_margin="@dimen/_8sdp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

@@ -39,4 +39,25 @@
         android:name="com.lightfeather.wide_awakefinancials.ui.addtransaction.AddTransactionDialog"
         android:label="AddTransactionDialog"
         tools:layout="@layout/dialog_add_transaction" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.lightfeather.wide_awakefinancials.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.lightfeather.wide_awakefinancials.ui.settings.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/insightsFragment"
+        android:name="com.lightfeather.wide_awakefinancials.ui.insights.InsightsFragment"
+        android:label="fragment_insights"
+        tools:layout="@layout/fragment_insights" />
+
+
 </navigation>

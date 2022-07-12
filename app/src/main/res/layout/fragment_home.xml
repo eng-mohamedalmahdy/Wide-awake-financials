@@ -12,34 +12,37 @@
         android:layout_height="match_parent"
         android:background="?colorPrimary">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/expenses_chart"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/_16sdp"
-            app:layout_constraintEnd_toStartOf="@+id/income_chart"
-            app:layout_constraintHeight_percent=".3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/charts_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/income_chart"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/expenses_chart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".25"
-            app:layout_constraintWidth_percent=".25" />
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/expenses_chart"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/income_chart"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/transactions_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expenses_chart"
+            app:layout_constraintTop_toBottomOf="@+id/charts_container"
             tools:listitem="@layout/list_item_transaction" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

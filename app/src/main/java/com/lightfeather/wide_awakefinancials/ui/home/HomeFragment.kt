@@ -1,6 +1,13 @@
 package com.lightfeather.wide_awakefinancials.ui.home
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +15,18 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.lightfeather.wide_awakefinancials.R
 import com.lightfeather.wide_awakefinancials.databinding.FragmentHomeBinding
+import com.lightfeather.wide_awakefinancials.ui.util.showBottomNavigation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
+private const val TAG = "HomeFragment"
 
 class HomeFragment : Fragment() {
 
@@ -58,7 +73,10 @@ class HomeFragment : Fragment() {
             val incomesChartDescription = Description()
 
             expensesChartDescription.text = getString(R.string.expenses)
+            expensesChartDescription.textSize = 14f
             incomesChartDescription.text = getString(R.string.income)
+            incomesChartDescription.textSize = 14f
+
             expandFabs.setOnClickListener {
                 setupVisibility(fabExpanded)
                 startAnimation(fabExpanded)
@@ -79,10 +97,49 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddCategoryDialog())
             }
 
-            expensesChart.data = viewModel.getExpensesData()
-            expensesChart.description = expensesChartDescription
-            incomeChart.data = viewModel.getIncomeData()
-            transactionsList.adapter = TransactionsListAdapter(viewModel.getAllTransactions())
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getExpensesData().collect {
+                    expensesChart.data = it
+                    expensesChart.description = expensesChartDescription
+                    expensesChart.setUsePercentValues(true)
+                    expensesChart.invalidate()
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getTotalExpenses().collect {
+                    expensesChart.setCenterTextSize(20f)
+                    expensesChart.setDrawCenterText(true)
+                    expensesChart.centerText = "$it $"
+                    expensesChart.setCenterTextColor(Color.BLACK)
+                    expensesChart.invalidate()
+                }
+            }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getIncomeData().collect {
+                    incomeChart.data = it
+                    incomeChart.description = incomesChartDescription
+                    incomeChart.setUsePercentValues(true)
+                    incomeChart.invalidate()
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getTotalIncome().collect {
+                    incomeChart.setCenterTextSize(20f)
+                    incomeChart.setDrawCenterText(true)
+                    incomeChart.centerText = "$it $"
+                    incomeChart.setCenterTextColor(Color.BLACK)
+                    incomeChart.invalidate()
+                }
+
+            }
+
+
+
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getAllTransactionsWithColors().map { TransactionsListAdapter(it) }
+                    .collect(transactionsList::setAdapter)
+            }
         }
     }
 
@@ -113,5 +170,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        requireActivity().showBottomNavigation()
+    }
 }

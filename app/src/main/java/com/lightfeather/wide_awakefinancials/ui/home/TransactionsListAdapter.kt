@@ -1,16 +1,22 @@
 package com.lightfeather.wide_awakefinancials.ui.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lightfeather.wide_awakefinancials.R
 import com.lightfeather.wide_awakefinancials.databinding.ListItemTransactionBinding
+import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.FinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionType
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TransactionsListAdapter(private val items: List<FinancialTransaction>) :
+
+class TransactionsListAdapter(private val items: List<ColoredFinancialTransaction>) :
     RecyclerView.Adapter<TransactionsListAdapter.ViewHolder>() {
 
 
@@ -19,6 +25,10 @@ class TransactionsListAdapter(private val items: List<FinancialTransaction>) :
         viewType: Int
     ): ViewHolder {
         val binding = ListItemTransactionBinding.inflate(LayoutInflater.from(parent.context))
+        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            MATCH_PARENT, WRAP_CONTENT
+        )
+        binding.root.layoutParams = params
         return ViewHolder(binding)
     }
 
@@ -28,7 +38,7 @@ class TransactionsListAdapter(private val items: List<FinancialTransaction>) :
 
     class ViewHolder(private val binding: ListItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(financialTransaction: FinancialTransaction) {
+        fun bind(financialTransaction: ColoredFinancialTransaction) {
             with(binding) {
                 val transactionImage = if (financialTransaction.type == TransactionType.INCOME)
                     R.drawable.ic_baseline_arrow_upward_24 else
@@ -38,8 +48,9 @@ class TransactionsListAdapter(private val items: List<FinancialTransaction>) :
 
                 transactionType.setImageResource(transactionImage)
                 transactionDate.text = format.format(date)
-                transactionAmount.text = "${financialTransaction.amount}"
+                transactionAmount.text = "${financialTransaction.amount} $"
                 transactionDescription.text = financialTransaction.description
+                transactionContainer.setCardBackgroundColor(android.graphics.Color.parseColor(financialTransaction.categoryColor))
             }
         }
 

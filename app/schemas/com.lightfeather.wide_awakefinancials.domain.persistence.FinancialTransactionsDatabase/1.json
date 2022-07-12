@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "13ac840e55af457ec4fdae00edd8bb9b",
+    "identityHash": "cb94d0fb92c5bd91e3d31f83b9dac72b",
     "entities": [
       {
         "tableName": "FinancialTransaction",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sourceId` INTEGER NOT NULL, `description` TEXT NOT NULL, `creationTime` INTEGER NOT NULL, `amount` REAL NOT NULL, `type` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`sourceId`) REFERENCES `TransactionCategory`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sourceId` INTEGER NOT NULL, `description` TEXT NOT NULL, `creationTime` INTEGER NOT NULL, `amount` REAL NOT NULL, `type` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY(`sourceId`) REFERENCES `TransactionCategory`(`category_id`) ON UPDATE SET NULL ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "sourceId",
@@ -42,7 +42,7 @@
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -55,8 +55,8 @@
         "foreignKeys": [
           {
             "table": "TransactionCategory",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onDelete": "NO ACTION",
+            "onUpdate": "SET NULL",
             "columns": [
               "sourceId"
             ],
@@ -68,7 +68,7 @@
       },
       {
         "tableName": "TransactionCategory",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `color` TEXT NOT NULL, `category_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `color` TEXT NOT NULL, `category_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "name",
@@ -86,7 +86,7 @@
             "fieldPath": "id",
             "columnName": "category_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -102,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '13ac840e55af457ec4fdae00edd8bb9b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb94d0fb92c5bd91e3d31f83b9dac72b')"
     ]
   }
 }

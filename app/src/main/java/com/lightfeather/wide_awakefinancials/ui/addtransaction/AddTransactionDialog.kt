@@ -1,26 +1,26 @@
 package com.lightfeather.wide_awakefinancials.ui.addtransaction
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
-import androidx.collection.arrayMapOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import com.lightfeather.wide_awakefinancials.R
 import com.lightfeather.wide_awakefinancials.databinding.DialogAddTransactionBinding
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionCategory
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionType
-import com.lightfeather.wide_awakefinancials.ui.startLoading
-import com.lightfeather.wide_awakefinancials.ui.stopLoading
+import com.lightfeather.wide_awakefinancials.ui.util.startLoading
+import com.lightfeather.wide_awakefinancials.ui.util.stopLoading
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.math.exp
+
+private const val TAG = "AddTransactionDialog"
 
 class AddTransactionDialog : DialogFragment() {
     private val viewModel: AddTransactionViewModel by viewModel()
@@ -64,10 +64,9 @@ class AddTransactionDialog : DialogFragment() {
                 }
 
                 binding.transactionCategories.setOnItemClickListener { adapterView, view, i, l ->
-                    if (!firstTimeSpinner) {
-                        selectedCategory = category[i]
-                    }
-                    firstTimeSpinner = false
+                    selectedCategory = category[i]
+                    Log.d(TAG, "onViewCreated: $selectedCategory")
+
                 }
             }
         }

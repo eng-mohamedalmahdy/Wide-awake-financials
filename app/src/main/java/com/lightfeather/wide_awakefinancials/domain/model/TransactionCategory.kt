@@ -11,6 +11,6 @@ data class TransactionCategory(
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "category_id")
-    var id: Int = 0
+    var id: Int? = null
 
 }

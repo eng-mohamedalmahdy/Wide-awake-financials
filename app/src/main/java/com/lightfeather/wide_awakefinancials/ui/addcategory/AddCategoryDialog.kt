@@ -9,8 +9,8 @@ import androidx.fragment.app.DialogFragment
 import com.larswerkman.holocolorpicker.ColorPicker
 import com.lightfeather.wide_awakefinancials.R
 import com.lightfeather.wide_awakefinancials.databinding.DialogAddCategoryBinding
-import com.lightfeather.wide_awakefinancials.ui.startLoading
-import com.lightfeather.wide_awakefinancials.ui.stopLoading
+import com.lightfeather.wide_awakefinancials.ui.util.startLoading
+import com.lightfeather.wide_awakefinancials.ui.util.stopLoading
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
