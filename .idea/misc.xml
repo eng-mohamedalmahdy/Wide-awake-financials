@@ -3,21 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/circle_jungle_green.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/green_selected.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_downward_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.1885" />
         <entry key="app/src/main/res/drawable/input_stroke_color.xml" value="0.157" />
         <entry key="app/src/main/res/drawable/red_selected.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_add_category.xml" value="0.13138686131386862" />
         <entry key="app/src/main/res/layout/dialog_add_transaction.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1527777777777778" />
         <entry key="app/src/main/res/layout/fragment_insights.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_privacy_policy.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/layout/list_item_date.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/list_item_expense.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/list_item_transaction.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/list_item_transaction.xml" value="0.1638888888888889" />
         <entry key="app/src/main/res/layout/list_item_transaction_category.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
       </map>

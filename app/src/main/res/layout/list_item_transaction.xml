@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,16 +9,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_4sdp">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:layout_margin="@dimen/_8sdp"
             android:id="@+id/transaction_container"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0.0px"
+            android:elevation="4dp"
+            android:outlineAmbientShadowColor="@color/green_medium"
+            android:outlineSpotShadowColor="@color/black"
             app:cardCornerRadius="@dimen/_8sdp"
-            app:cardElevation="2dp">
+            app:cardElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,39 +52,56 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/transaction_date"
+                        android:id="@+id/transaction_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_4sdp"
-                        android:text="20/5/2022 9:21"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/transaction_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_4sdp"
-                        android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provident"
+                        android:alpha=".8"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_18sdp" />
+                        android:textSize="@dimen/_16sdp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/transaction_amount"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="500$"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/transaction_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:gravity="center"
+                        android:text="500$"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold" />
+
+
+                    <com.leondzn.simpleanalogclock.SimpleAnalogClock
+                        android:id="@+id/transaction_time"
+                        android:background="@drawable/circle_jungle_green"
+                        android:backgroundTint="@color/medium_jungle_green"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        app:faceTint="@color/medium_jungle_green"/>
+
+                </LinearLayout>
+
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -5,6 +5,15 @@ buildscript {
         def nav_version = "2.3.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
+    repositories {
+        maven {
+            url "https://jitpack.io"
+        }
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+\
+    }
 }
 
 plugins {
@@ -14,7 +23,6 @@ plugins {
     id "org.jetbrains.kotlin.kapt" version "1.7.10"
 
 }
-
 
 
 task clean(type: Delete) {

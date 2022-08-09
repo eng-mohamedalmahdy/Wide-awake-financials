@@ -25,9 +25,8 @@ private const val TAG = "AddTransactionDialog"
 class AddTransactionDialog : DialogFragment() {
     private val viewModel: AddTransactionViewModel by viewModel()
     private lateinit var binding: DialogAddTransactionBinding
-    private var firstTimeSpinner = true
     private var selectedCategory: TransactionCategory? = null
-
+    private val transaction by lazy { AddTransactionDialogArgs.fromBundle(requireArguments()).transaction }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,23 +46,24 @@ class AddTransactionDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.getTransactionCategories().collect { category ->
-
                 withContext(Dispatchers.Main) {
                     if (context != null) {
                         binding.transactionCategories.setAdapter(
                             ArrayAdapter(
-                                context!!,
+                                requireContext(),
                                 R.layout.list_item_transaction_category,
                                 category.map { "${it.id}- ${it.name}" }
                             )
                         )
                     }
                 }
+                withContext(Dispatchers.Main) {
+                    fillData()
+                }
 
-                binding.transactionCategories.setOnItemClickListener { adapterView, view, i, l ->
+                binding.transactionCategories.setOnItemClickListener { _, _, i, l ->
                     selectedCategory = category[i]
                     Log.d(TAG, "onViewCreated: $selectedCategory")
 
@@ -71,35 +71,81 @@ class AddTransactionDialog : DialogFragment() {
             }
         }
         with(binding) {
-            addCategory.setOnClickListener {
-                if (transactionDescription.text?.isEmpty() == true) {
-                    transactionDescription.error = getString(R.string.cannot_be_empty)
-                } else if (transactionAmount.text?.isEmpty() == true) {
-                    transactionAmount.error = getString(R.string.cannot_be_empty)
-                } else if (transactionCategories.text?.isEmpty() == true) {
-                    transactionCategories.error = getString(R.string.please_select)
-                } else {
-                    requireActivity().startLoading()
-                    val selection =
-                        if (toggleButton.checkedButtonId == R.id.expense) TransactionType.EXPENSE else TransactionType.INCOME
-                    transactionDescription.error = null
-                    transactionAmount.error = null
-                    transactionCategories.error = null
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.addTransaction(
-                            transactionDescription.text.toString(),
-                            selectedCategory?.id ?: -1,
-                            transactionAmount.text.toString().toDouble(),
-                            selection
-                        )
-                        withContext(Dispatchers.Main) {
-                            dismiss()
-                            requireActivity().stopLoading()
+            addTransaction.setOnClickListener {
+                addNewOrUpdateTransaction(transaction != null)
+            }
+        }
+    }
 
-                        }
+    private fun onInputValid(onInputValidAction: () -> Unit) {
+        with(binding) {
+            if (transactionDescription.text?.isEmpty() == true) {
+                transactionDescription.error = getString(R.string.cannot_be_empty)
+            } else if (transactionAmount.text?.isEmpty() == true) {
+                transactionAmount.error = getString(R.string.cannot_be_empty)
+            } else if (transactionCategories.text?.isEmpty() == true) {
+                transactionCategories.error = getString(R.string.please_select)
+            } else {
+                onInputValidAction()
+            }
+        }
+    }
+
+
+    private fun addNewOrUpdateTransaction(isUpdating: Boolean) {
+        with(binding) {
+            onInputValid {
+                requireActivity().startLoading()
+                val selection =
+                    if (toggleButton.checkedButtonId == R.id.expense) TransactionType.EXPENSE else TransactionType.INCOME
+                clearErrors()
+                CoroutineScope(Dispatchers.IO).launch {
+                    Log.d(TAG, "addNewOrUpdateTransaction: $transaction")
+
+                    viewModel.addOrUpdateTransaction(
+                        isUpdating = isUpdating,
+                        transactionDescription.text.toString(),
+                        selectedCategory?.id ?: -1,
+                        transaction?.creationTime,
+                        transactionAmount.text.toString().toDouble(),
+                        selection,
+                        transaction?.id
+                    )
+                    withContext(Dispatchers.Main) {
+                        dismiss()
+                        requireActivity().stopLoading()
                     }
                 }
             }
+        }
+    }
+
+    private fun clearErrors() {
+        with(binding) {
+            transactionDescription.error = null
+            transactionAmount.error = null
+            transactionCategories.error = null
+        }
+    }
+
+    private fun fillData() {
+        transaction?.let { transaction ->
+            with(binding) {
+                transactionDescription.setText(transaction.description)
+                transactionAmount.setText(transaction.amount.toString())
+                CoroutineScope(Dispatchers.Main).launch {
+                    viewModel.getTransactionCategories().collect { categories ->
+                        val item = categories.first { transaction.categoryId == it.id }
+                        transactionCategories.setText("${item.id}- ${item.name}", false)
+                        selectedCategory = item
+                    }
+                }
+                if (transaction.type == TransactionType.EXPENSE) {
+                    toggleButton.check(R.id.expense)
+                } else toggleButton.check(R.id.income)
+                addTransaction.setText(R.string.update_transaction)
+            }
+
         }
     }
 }

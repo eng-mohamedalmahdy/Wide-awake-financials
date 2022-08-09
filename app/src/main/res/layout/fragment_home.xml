@@ -12,69 +12,111 @@
         android:layout_height="match_parent"
         android:background="?colorPrimary">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/charts_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_margin="@dimen/_8sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/expenses_chart"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_150sdp"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/income_chart"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_150sdp"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_weight="1" />
-        </LinearLayout>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/expenses_chart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:layout_weight="1" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/transactions_list"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/income_chart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:layout_weight="1" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/total_chart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_minus24sdp"
+            app:cardCornerRadius="@dimen/_24sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/charts_container"
-            tools:listitem="@layout/list_item_transaction" />
+            app:layout_constraintTop_toBottomOf="@+id/charts_container">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/transactions_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_50sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_transaction" />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/expand_fabs"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
             android:contentDescription="@string/add_expense"
-            android:src="@drawable/ic_baseline_add_24"
+            android:text="@string/add"
+            app:icon="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/add_category"
             app:useCompatPadding="true" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_category"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
             android:clickable="true"
+            android:text="@string/add_category"
             android:visibility="invisible"
+
+            app:icon="@drawable/ic_baseline_category_24"
             app:layout_constraintBottom_toTopOf="@+id/expand_fabs"
             app:layout_constraintEnd_toEndOf="@id/expand_fabs"
-            app:srcCompat="@drawable/ic_baseline_category_24"
+            app:layout_constraintStart_toStartOf="@id/add_transaction"
             app:useCompatPadding="true" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
             android:clickable="true"
+            android:text="@string/add_transaction"
             android:visibility="invisible"
+            app:icon="@drawable/ic_baseline_attach_money_24"
             app:layout_constraintBottom_toTopOf="@+id/add_category"
             app:layout_constraintEnd_toEndOf="@id/add_category"
-            app:srcCompat="@drawable/ic_baseline_attach_money_24"
             app:useCompatPadding="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

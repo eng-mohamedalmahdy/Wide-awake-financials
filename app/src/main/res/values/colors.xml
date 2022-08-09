@@ -10,12 +10,17 @@
     <color name="green_dark">#008200</color>
     <color name="green_medium">#26CE35</color>
     <color name="green_light">#7CFC00</color>
-
+    <color name="medium_turquoise">#01BAEF</color>
+    <color name="carolina_blue">#4ea5d9</color>
+    <color name="medium_jungle_green">#122c34</color>
+    <color name="dark_cornflower_blue">#2a4494</color>
     <color name="yellow_dark">#FFE509</color>
     <color name="yellow_medium">#FFF507</color>
     <color name="yellow_light">#FFFF1C</color>
     <color name="madder_lake">#CB3636</color>
     <color name="isabelline">#EDF3EC</color>
+    <color name="cyan_blue_azure">#3C90BB</color>
+
 
 
 </resources>

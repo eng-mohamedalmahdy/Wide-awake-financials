@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_8sdp"
+        android:background="?colorPrimary"
         android:orientation="vertical"
         android:padding="@dimen/_16sdp">
 
@@ -17,7 +18,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_category">
+            android:hint="@string/add_category"
+            app:boxStrokeColor="@color/medium_jungle_green">
 
             <com.google.android.material.textfield.TextInputEditText
 
@@ -48,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
             android:drawableEnd="@drawable/ic_baseline_add_24"
-            android:text="@string/add_category" />
+            android:text="@string/add_category"
+            app:backgroundTint="?colorSecondary" />
 
     </LinearLayout>
 </layout>

@@ -18,7 +18,7 @@ interface TransactionsDAO {
     fun insertTransaction(transaction: FinancialTransaction)
 
     @Delete
-    fun deleteTransaction(transaction: FinancialTransaction)
+    suspend fun deleteTransaction(transaction: FinancialTransaction)
 
     @Delete
     fun deleteCategory(transactionCategory: TransactionCategory)
@@ -28,9 +28,11 @@ interface TransactionsDAO {
 
     @Query(
         "SELECT DISTINCT" +
+                " id, " +
+                "category_id as categoryId, " +
                 " color as categoryColor," +
                 " description as description," +
-                " TransactionCategory.name as categoryName,"+
+                " TransactionCategory.name as categoryName," +
                 " creationTime as creationTime," +
                 " amount as amount," +
                 " type as type" +
@@ -42,9 +44,11 @@ interface TransactionsDAO {
 
     @Query(
         "SELECT DISTINCT" +
+                " id, " +
+                "category_id as categoryId," +
                 " color as categoryColor," +
                 " description as description," +
-                " TransactionCategory.name as categoryName, "+
+                " TransactionCategory.name as categoryName, " +
                 " creationTime as creationTime," +
                 " SUM(amount) as amount," +
                 " type as type" +
@@ -56,12 +60,14 @@ interface TransactionsDAO {
 
     @Query(
         "SELECT DISTINCT" +
+                " id," +
+                "category_id as categoryId, " +
                 " color as categoryColor," +
                 " description as description," +
                 " creationTime as creationTime," +
                 " SUM(amount) as amount," +
                 " type as type," +
-                " name as categoryName"+
+                " name as categoryName" +
                 " FROM FinancialTransaction,TransactionCategory" +
                 " WHERE TransactionCategory.category_id = FinancialTransaction.sourceId AND type = 'EXPENSE'" +
                 " GROUP BY TransactionCategory.category_id"
@@ -70,16 +76,21 @@ interface TransactionsDAO {
 
     @Query(
         "SELECT DISTINCT" +
+                " id ," +
+                "category_id as categoryId, " +
                 " color as categoryColor," +
                 " description as description," +
                 " creationTime as creationTime," +
                 " SUM(amount) as amount," +
                 " type as type," +
-                " name as categoryName"+
+                " name as categoryName" +
                 " FROM FinancialTransaction,TransactionCategory" +
                 " WHERE TransactionCategory.category_id = FinancialTransaction.sourceId AND type = 'INCOME'" +
                 " GROUP BY TransactionCategory.category_id"
     )
     fun getIncomeSummeryWithColors(): Flow<List<ColoredFinancialTransaction>>
+
+    @Update
+    fun updateTransaction(transaction: FinancialTransaction)
 
 }

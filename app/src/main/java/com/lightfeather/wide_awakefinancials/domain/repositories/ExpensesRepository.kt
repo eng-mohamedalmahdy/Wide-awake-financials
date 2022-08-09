@@ -1,6 +1,7 @@
 package com.lightfeather.wide_awakefinancials.domain.repositories
 
 import android.util.Log
+import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.FinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionCategory
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionType
@@ -47,7 +48,6 @@ class ExpensesRepository(private val transactionsDAO: TransactionsDAO) {
             amount,
             transactionType
         )
-        Log.d(TAG, "addTransaction: $categoryId")
         transactionsDAO.insertTransaction(transaction)
     }
 
@@ -56,4 +56,25 @@ class ExpensesRepository(private val transactionsDAO: TransactionsDAO) {
         return tipsList.random()
     }
 
+    suspend fun deleteTransaction(transaction: ColoredFinancialTransaction) =
+        transactionsDAO.deleteTransaction(transaction.toFinancialTransaction())
+
+    fun updateTransaction(
+        id: Int,
+        desc: String,
+        categoryId: Int,
+        creationTime: Long,
+        amount: Double,
+        transactionType: TransactionType
+    ) {
+        val transaction = FinancialTransaction(
+            categoryId,
+            desc,
+            creationTime,
+            amount,
+            transactionType
+        )
+        transaction.id = id
+        transactionsDAO.updateTransaction(transaction)
+    }
 }

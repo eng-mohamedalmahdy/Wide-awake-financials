@@ -27,7 +27,10 @@
             app:destination="@id/addCategoryDialog" />
         <action
             android:id="@+id/action_homeFragment_to_addTransactionDialog"
-            app:destination="@id/addTransactionDialog" />
+            app:destination="@id/addTransactionDialog">
+
+
+        </action>
     </fragment>
     <dialog
         android:id="@+id/addCategoryDialog"
@@ -38,12 +41,17 @@
         android:id="@+id/addTransactionDialog"
         android:name="com.lightfeather.wide_awakefinancials.ui.addtransaction.AddTransactionDialog"
         android:label="AddTransactionDialog"
-        tools:layout="@layout/dialog_add_transaction" />
+        tools:layout="@layout/dialog_add_transaction">
+        <argument
+            android:name="transaction"
+            app:argType="com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction"
+            app:nullable="true" />
+    </dialog>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.lightfeather.wide_awakefinancials.ui.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
             app:destination="@id/privacyPolicyFragment" />

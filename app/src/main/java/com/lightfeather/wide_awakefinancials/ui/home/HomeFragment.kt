@@ -14,16 +14,28 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.material.snackbar.Snackbar
 import com.lightfeather.wide_awakefinancials.R
 import com.lightfeather.wide_awakefinancials.databinding.FragmentHomeBinding
+import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction
+import com.lightfeather.wide_awakefinancials.domain.model.DateListItem
+import com.lightfeather.wide_awakefinancials.domain.model.TransactionsListModel
+import com.lightfeather.wide_awakefinancials.ui.util.SwipeGesture
 import com.lightfeather.wide_awakefinancials.ui.util.showBottomNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 private const val TAG = "HomeFragment"
@@ -33,29 +45,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModel()
     private var fabExpanded = false
-    private val openAnimation by lazy {
-        AnimationUtils.loadAnimation(
-            requireActivity(),
-            R.anim.rotate_open
-        )
-    }
-    private val closeAnimation by lazy {
-        AnimationUtils.loadAnimation(
-            requireActivity(),
-            R.anim.rotate_close
-        )
-    }
+
     private val fromBottomAnimation by lazy {
-        AnimationUtils.loadAnimation(
-            requireActivity(),
-            R.anim.from_bottom
-        )
+        AnimationUtils.loadAnimation(requireActivity(), R.anim.from_bottom)
     }
     private val toBottomAnimation by lazy {
-        AnimationUtils.loadAnimation(
-            requireActivity(),
-            R.anim.to_bottom
-        )
+        AnimationUtils.loadAnimation(requireActivity(), R.anim.to_bottom)
     }
 
     override fun onCreateView(
@@ -71,11 +66,35 @@ class HomeFragment : Fragment() {
         with(binding) {
             val expensesChartDescription = Description()
             val incomesChartDescription = Description()
+            val totalChartDescription = Description()
 
             expensesChartDescription.text = getString(R.string.expenses)
-            expensesChartDescription.textSize = 14f
+            expensesChartDescription.textSize = 12f
             incomesChartDescription.text = getString(R.string.income)
-            incomesChartDescription.textSize = 14f
+            incomesChartDescription.textSize = 12f
+            totalChartDescription.text = getString(R.string.total)
+            totalChartDescription.textSize = 12f
+
+
+            totalChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            incomeChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            expensesChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+
+            incomeChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            expensesChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+
+            totalChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            totalChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+
+
+            incomeChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            incomeChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+
+
+            expensesChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            expensesChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+
+
 
             expandFabs.setOnClickListener {
                 setupVisibility(fabExpanded)
@@ -87,7 +106,9 @@ class HomeFragment : Fragment() {
                 setupVisibility(fabExpanded)
                 startAnimation(fabExpanded)
                 fabExpanded = !fabExpanded
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionDialog())
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToAddTransactionDialog(null)
+                )
 
             }
             addCategory.setOnClickListener {
@@ -107,7 +128,7 @@ class HomeFragment : Fragment() {
             }
             CoroutineScope(Dispatchers.Main).launch {
                 viewModel.getTotalExpenses().collect {
-                    expensesChart.setCenterTextSize(20f)
+                    expensesChart.setCenterTextSize(12f)
                     expensesChart.setDrawCenterText(true)
                     expensesChart.centerText = "$it $"
                     expensesChart.setCenterTextColor(Color.BLACK)
@@ -125,7 +146,7 @@ class HomeFragment : Fragment() {
             }
             CoroutineScope(Dispatchers.Main).launch {
                 viewModel.getTotalIncome().collect {
-                    incomeChart.setCenterTextSize(20f)
+                    incomeChart.setCenterTextSize(12f)
                     incomeChart.setDrawCenterText(true)
                     incomeChart.centerText = "$it $"
                     incomeChart.setCenterTextColor(Color.BLACK)
@@ -134,11 +155,101 @@ class HomeFragment : Fragment() {
 
             }
 
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getAllData().collect {
+                    totalChart.data = it
+                    totalChart.description = totalChartDescription
+                    totalChart.setUsePercentValues(true)
+                    totalChart.invalidate()
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getTotalExpensesAndIncome().collect {
+                    totalChart.setCenterTextSize(12f)
+                    totalChart.setDrawCenterText(true)
+                    totalChart.centerText = "$it $"
+                    totalChart.setCenterTextColor(Color.BLACK)
+                    totalChart.invalidate()
+                }
+
+            }
+
 
 
             CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getAllTransactionsWithColors().map { TransactionsListAdapter(it) }
-                    .collect(transactionsList::setAdapter)
+                viewModel.getAllTransactionsWithColors()
+                    .map {
+                        val res = mutableListOf<TransactionsListModel>()
+                        it.toMutableList()
+                            .reversed()
+                            .groupBy {
+                                val date = Date(it.creationTime)
+                                val format =
+                                    SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+                                format.format(date)
+                            }.forEach { (k, v) ->
+                                res += DateListItem(k)
+                                v.forEach {
+                                    res += it
+                                }
+                            }
+                        res.distinct().toMutableList()
+                    }
+                    .map(::TransactionsListAdapter)
+                    .collect { adapter ->
+                        transactionsList.adapter = adapter
+                        val swipeGesture = object : SwipeGesture(requireContext()) {
+                            override fun onSwiped(
+                                viewHolder: RecyclerView.ViewHolder,
+                                direction: Int
+                            ) {
+                                try {
+                                    val item =
+                                        adapter.items[viewHolder.bindingAdapterPosition] as ColoredFinancialTransaction
+                                    when (direction) {
+                                        ItemTouchHelper.LEFT -> {
+                                            CoroutineScope(Dispatchers.Main).launch {
+
+                                                viewModel.deleteItem(item)
+                                                adapter.notifyItemChanged(viewHolder.adapterPosition);
+                                                Snackbar.make(
+                                                    binding.root,
+                                                    getString(R.string.deleted_successfully),
+                                                    Snackbar.LENGTH_LONG
+                                                ).apply {
+                                                    setAction(getString(R.string.undo)) {
+                                                        CoroutineScope(Dispatchers.IO).launch {
+                                                            viewModel.insertTransaction(item)
+                                                        }
+                                                    }
+                                                    show()
+                                                }
+                                            }
+                                        }
+                                        ItemTouchHelper.RIGHT -> {
+                                            findNavController().navigate(
+                                                HomeFragmentDirections.actionHomeFragmentToAddTransactionDialog(
+                                                    item
+                                                )
+                                            )
+                                            adapter.notifyDataSetChanged()
+                                            transactionsList.recycledViewPool.clear()
+                                        }
+                                    }
+                                    adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+
+                                } catch (ex: IndexOutOfBoundsException) {
+                                    adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                                    transactionsList.recycledViewPool.clear()
+                                }
+
+                            }
+                        }
+                        val touchHelper = ItemTouchHelper(swipeGesture)
+                        touchHelper.attachToRecyclerView(transactionsList)
+                    }
+
+
             }
         }
     }
@@ -159,11 +270,9 @@ class HomeFragment : Fragment() {
     private fun startAnimation(fabExpanded: Boolean) {
         with(binding) {
             if (fabExpanded) {
-                expandFabs.startAnimation(closeAnimation)
                 addCategory.startAnimation(toBottomAnimation)
                 addTransaction.startAnimation(toBottomAnimation)
             } else {
-                expandFabs.startAnimation(openAnimation)
                 addCategory.startAnimation(fromBottomAnimation)
                 addTransaction.startAnimation(fromBottomAnimation)
             }
