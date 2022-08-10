@@ -7,9 +7,9 @@
     </data>
 
     <ScrollView
-        android:background="?colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?colorPrimary">
 
         <LinearLayout
 
@@ -30,7 +30,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:text="@string/placeholder"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:textColor="@color/medium_jungle_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/expenses"
                 android:textSize="@dimen/_18sdp" />
 
             <com.github.mikephil.charting.charts.BarChart
@@ -38,6 +47,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:layout_margin="@dimen/_8sdp" />
+
+            <TextView
+                android:textColor="@color/medium_jungle_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/income"
+                android:textSize="@dimen/_18sdp" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/income_summery"

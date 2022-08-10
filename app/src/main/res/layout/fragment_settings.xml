@@ -23,23 +23,68 @@
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/language"
+                android:textColor="@color/medium_jungle_green"
                 android:textSize="@dimen/_21sdp" />
 
             <Spinner
                 android:id="@+id/language_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:entries="@array/languages"
                 app:tint="@color/white" />
         </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".3"
+            android:background="@color/white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:hint="@string/currency"
+                app:boxStrokeColor="@color/medium_jungle_green"
+                app:layout_constraintStart_toEndOf="@id/tv_currency"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLength="3" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/currency"
+                android:textColor="@color/medium_jungle_green"
+                android:textSize="@dimen/_21sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -49,11 +94,11 @@
 
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_margin="@dimen/_8sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/dark_mode_text"
@@ -99,18 +144,18 @@
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/privacy_policy"
+                android:textColor="@color/medium_jungle_green"
                 android:textSize="@dimen/_21sdp" />
 
             <ImageView
                 android:layout_width="@dimen/_48sdp"
                 android:layout_height="@dimen/_48sdp"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_12sdp"
                 android:src="@drawable/ic_baseline_privacy_tip_24"
@@ -131,18 +176,19 @@
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/rate_us"
+                android:textColor="@color/medium_jungle_green"
                 android:textSize="@dimen/_21sdp" />
 
             <ImageView
                 android:layout_width="@dimen/_48sdp"
                 android:layout_height="@dimen/_48sdp"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_12sdp"
                 android:src="@drawable/ic_baseline_star_rate_24"

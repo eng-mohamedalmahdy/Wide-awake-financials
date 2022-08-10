@@ -25,6 +25,7 @@ import com.lightfeather.wide_awakefinancials.databinding.FragmentHomeBinding
 import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction
 import com.lightfeather.wide_awakefinancials.domain.model.DateListItem
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionsListModel
+import com.lightfeather.wide_awakefinancials.domain.persistence.AppPreferences
 import com.lightfeather.wide_awakefinancials.ui.util.SwipeGesture
 import com.lightfeather.wide_awakefinancials.ui.util.showBottomNavigation
 import kotlinx.coroutines.CoroutineScope
@@ -43,6 +44,7 @@ private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private val preferences by lazy { AppPreferences(requireContext()) }
     private val viewModel: HomeViewModel by viewModel()
     private var fabExpanded = false
 
@@ -76,22 +78,24 @@ class HomeFragment : Fragment() {
             totalChartDescription.textSize = 12f
 
 
-            totalChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-            incomeChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-            expensesChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            totalChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
+            incomeChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
+            expensesChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
 
-            incomeChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-            expensesChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            totalChart.legend.isWordWrapEnabled = true
+            incomeChart.legend.isWordWrapEnabled = true
+            expensesChart.legend.isWordWrapEnabled = true
 
-            totalChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+
+            totalChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             totalChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
 
 
-            incomeChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            incomeChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             incomeChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
 
 
-            expensesChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            expensesChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             expensesChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
 
 
@@ -130,7 +134,7 @@ class HomeFragment : Fragment() {
                 viewModel.getTotalExpenses().collect {
                     expensesChart.setCenterTextSize(12f)
                     expensesChart.setDrawCenterText(true)
-                    expensesChart.centerText = "$it $"
+                    expensesChart.centerText = "$it ${preferences.getCurrency()}"
                     expensesChart.setCenterTextColor(Color.BLACK)
                     expensesChart.invalidate()
                 }
@@ -148,7 +152,7 @@ class HomeFragment : Fragment() {
                 viewModel.getTotalIncome().collect {
                     incomeChart.setCenterTextSize(12f)
                     incomeChart.setDrawCenterText(true)
-                    incomeChart.centerText = "$it $"
+                    incomeChart.centerText = "$it ${preferences.getCurrency()}"
                     incomeChart.setCenterTextColor(Color.BLACK)
                     incomeChart.invalidate()
                 }
@@ -167,7 +171,7 @@ class HomeFragment : Fragment() {
                 viewModel.getTotalExpensesAndIncome().collect {
                     totalChart.setCenterTextSize(12f)
                     totalChart.setDrawCenterText(true)
-                    totalChart.centerText = "$it $"
+                    totalChart.centerText = "$it ${preferences.getCurrency()}"
                     totalChart.setCenterTextColor(Color.BLACK)
                     totalChart.invalidate()
                 }

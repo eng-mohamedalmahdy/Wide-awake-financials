@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wide-awake financials</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Search">بحث</string>
+    <string name="add_expense">بحث</string>
+    <string name="expenses">المصروفات</string>
+    <string name="income">الدخل</string>
+    <string name="home">الرئيسية</string>
+    <string name="insights">افكار</string>
+    <string name="settings">الإعدادات</string>
+    <string name="add_category">اضافة فئة</string>
+    <string name="category_color">لون الفئة</string>
+    <string name="cannot_be_empty">لا يمكن ترك هذا الحقل فارغ</string>
+    <string name="description">الوصف</string>
+    <string name="category">الفئة</string>
+    <string name="add_transaction">اضافة تحويل</string>
+    <string name="amount">المبلغ</string>
+    <string name="please_select">الرجاء اختيار فئة او إضافة واحدة</string>
+    <string name="language">اللغة</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="rate_us">قيمنا</string>
+    <string name="placeholder">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae</string>
+    <string name="add">اضافة</string>
+    <string name="deleted_successfully">تم الحذف بنجاح</string>
+    <string name="undo">تراجع</string>
+    <string name="update_transaction">تحديث التحويل</string>
+    <string name="total">المجموع</string>
+    <string name="there_are_no_transactions_yet">لا يوجد أي تحويلات بعد اضف البعض الآن</string>
+    <string name="currency">العملة</string>
+</resources>

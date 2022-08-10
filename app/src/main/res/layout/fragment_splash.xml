@@ -26,6 +26,7 @@
             app:lottie_rawRes="@raw/gold_falling" />
 
         <TextView
+            android:textColor="@color/medium_jungle_green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"

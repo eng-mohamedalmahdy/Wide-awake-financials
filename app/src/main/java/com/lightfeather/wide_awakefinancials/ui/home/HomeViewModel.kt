@@ -62,7 +62,8 @@ class HomeViewModel(private val repo: ExpensesRepository) : ViewModel() {
 
             val colors = transactions.map { Color.parseColor(it.categoryColor) }.distinct()
             val entries =
-                transactions.map { item -> PieEntry(item.amount.toFloat(), item.categoryName) }.distinctBy { it.label }
+                transactions.map { item -> PieEntry(item.amount.toFloat(), item.categoryName) }
+                    .distinctBy { it.label }
             PieData(PieDataSet(entries, "").apply {
                 this.colors = colors
             })
@@ -71,7 +72,7 @@ class HomeViewModel(private val repo: ExpensesRepository) : ViewModel() {
 
     fun getTotalExpensesAndIncome(): Flow<Double> {
         return repo.getIncomeData().map { it.sumOf { it.amount } }
-            .combine(repo.getExpensesData().map { it.sumOf { it.amount } }) { a, b -> b - a }
+            .combine(repo.getExpensesData().map { it.sumOf { it.amount } }) { a, b -> a - b }
     }
 
 

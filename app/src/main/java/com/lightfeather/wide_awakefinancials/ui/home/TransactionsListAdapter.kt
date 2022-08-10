@@ -14,6 +14,7 @@ import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransa
 import com.lightfeather.wide_awakefinancials.domain.model.DateListItem
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionType
 import com.lightfeather.wide_awakefinancials.domain.model.TransactionsListModel
+import com.lightfeather.wide_awakefinancials.domain.persistence.AppPreferences
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,6 +71,7 @@ class TransactionsListAdapter(val items: MutableList<TransactionsListModel>) :
 
     class TransactionViewHolder(val binding: ListItemTransactionBinding) :
         ParentViewHolder(binding.root) {
+        private val preferences by lazy { AppPreferences(binding.root.context) }
         override fun bind(transactionsListModel: TransactionsListModel) {
             val financialTransaction = transactionsListModel as ColoredFinancialTransaction
             with(binding) {
@@ -85,7 +87,8 @@ class TransactionsListAdapter(val items: MutableList<TransactionsListModel>) :
                 )
                 transactionType.setImageResource(transactionImage)
                 transactionCategory.text = financialTransaction.categoryName
-                transactionAmount.text = "${financialTransaction.amount} $"
+                transactionAmount.text =
+                    "${financialTransaction.amount} ${preferences.getCurrency()}"
                 transactionDescription.text = financialTransaction.description
                 transactionContainer.setCardBackgroundColor(
                     android.graphics.Color.parseColor(

@@ -33,7 +33,7 @@
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/expenses_chart"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="@dimen/_170sdp"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/_2sdp"
                     android:layout_weight="1" />
@@ -41,14 +41,14 @@
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/income_chart"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="@dimen/_170sdp"
                     android:layout_margin="@dimen/_2sdp"
                     android:layout_weight="1" />
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/total_chart"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="@dimen/_170sdp"
                     android:layout_margin="@dimen/_2sdp"
                     android:layout_weight="1" />
             </LinearLayout>

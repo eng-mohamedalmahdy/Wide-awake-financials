@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lightfeather.wide_awakefinancials.databinding.FragmentSettingsBinding
@@ -20,6 +21,7 @@ import com.lightfeather.wide_awakefinancials.ui.util.showBottomNavigation
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private var firstTime = true
+    private val prefs by lazy { AppPreferences(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +53,8 @@ class SettingsFragment : Fragment() {
 
     private fun setupSpinner() {
         with(binding) {
+            currency.setText(prefs.getCurrency())
+            currency.addTextChangedListener { prefs.setCurrency(it.toString()) }
             val currentLanguage = requireActivity().getCurrentLanguage()
             if (currentLanguage?.language.equals("ar", true)) {
                 languageSelector.setSelection(0)

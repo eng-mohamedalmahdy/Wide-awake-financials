@@ -12,40 +12,23 @@ import java.util.*
 class InsightsViewModel(private val repository: ExpensesRepository) : ViewModel() {
 
     fun getInsights(): String = repository.getInsights()
-    fun getIncomeData(): Flow<BarData> {
-        return repository.getIncomeData().map { transactions ->
+    fun getIncomeData() = repository.getIncomeData().map { transactions ->
+        val colors = transactions.map { Color.parseColor(it.categoryColor) }
+        val entries =
+            transactions.groupBy { SimpleDateFormat("dd/MMM/YY").format(Date(it.creationTime)) }
+        Pair(colors, entries)
+    }
+
+
+    fun getExpensesData() =
+        repository.getExpensesData().map { transactions ->
 
             val colors = transactions.map { Color.parseColor(it.categoryColor) }
             val entries = transactions.groupBy {
-                SimpleDateFormat("MMM").format(Date(it.creationTime))
-            }.values.mapIndexed { idx, values ->
-                BarEntry(
-                    idx.toFloat(),
-                    values.sumOf { it.amount }.toFloat()
-                )
+                SimpleDateFormat("dd/MMM/YY").format(Date(it.creationTime))
             }
-            BarData(BarDataSet(entries, "").apply {
-                this.colors = colors
-            })
+            Pair(colors, entries)
         }
-    }
 
-    fun getExpensesData(): Flow<BarData> {
-        return repository.getExpensesData().map { transactions ->
-
-            val colors = transactions.map { Color.parseColor(it.categoryColor) }
-            val entries = transactions.groupBy {
-                SimpleDateFormat("MMM").format(Date(it.creationTime))
-            }.values.mapIndexed { idx, values ->
-                BarEntry(
-                    idx.toFloat(),
-                    values.sumOf { it.amount }.toFloat()
-                )
-            }
-            BarData(BarDataSet(entries, "").apply {
-                this.colors = colors
-            })
-        }
-    }
 
 }
