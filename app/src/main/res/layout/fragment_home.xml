@@ -56,14 +56,40 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_minus24sdp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_24sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/charts_container">
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/_minus10sdp"
+                android:id="@+id/items_place_holder"
+                android:layout_width="@dimen/_300sdp"
+                android:layout_height="@dimen/_300sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_jungle_green"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:src="@drawable/ic_baseline_attach_money_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/there_are_no_transactions_yet"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_24sdp" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transactions_list"

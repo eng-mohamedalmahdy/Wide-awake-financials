@@ -197,6 +197,8 @@ class HomeFragment : Fragment() {
                     }
                     .map(::TransactionsListAdapter)
                     .collect { adapter ->
+                        itemsPlaceHolder.visibility =
+                            if (adapter.items.isEmpty()) View.VISIBLE else View.GONE
                         transactionsList.adapter = adapter
                         val swipeGesture = object : SwipeGesture(requireContext()) {
                             override fun onSwiped(
