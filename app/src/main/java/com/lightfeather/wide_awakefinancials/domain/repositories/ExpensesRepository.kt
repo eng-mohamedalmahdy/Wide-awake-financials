@@ -1,11 +1,9 @@
 package com.lightfeather.wide_awakefinancials.domain.repositories
 
 import android.util.Log
-import com.lightfeather.wide_awakefinancials.domain.model.ColoredFinancialTransaction
-import com.lightfeather.wide_awakefinancials.domain.model.FinancialTransaction
-import com.lightfeather.wide_awakefinancials.domain.model.TransactionCategory
-import com.lightfeather.wide_awakefinancials.domain.model.TransactionType
+import com.lightfeather.wide_awakefinancials.domain.model.*
 import com.lightfeather.wide_awakefinancials.domain.persistence.TransactionsDAO
+import kotlinx.coroutines.flow.Flow
 import kotlin.random.Random
 
 
@@ -77,4 +75,16 @@ class ExpensesRepository(private val transactionsDAO: TransactionsDAO) {
         transaction.id = id
         transactionsDAO.updateTransaction(transaction)
     }
+
+    fun getAverageSpending(): Flow<Double> = transactionsDAO.getAverageSpending()
+    fun getHighestTransaction(): Flow<Double> = transactionsDAO.getHighestTransaction()
+
+    fun getLowestTransaction(): Flow<Double> = transactionsDAO.getLowestTransaction()
+
+    fun getHighestCategory(): Flow<SelectedCategory> = transactionsDAO.getHighestCategory()
+
+    fun getLowestCategory(): Flow<SelectedCategory> = transactionsDAO.getLowestCategory()
+    fun getCategoriesName(): Flow<List<String>> = transactionsDAO.getCategoriesName()
+    fun getExpensesByCategoryName(name: String) = transactionsDAO.getExpensesByCategoryName(name)
+    fun getIncomeByCategoryName(name: String) = transactionsDAO.getIncomeByCategoryName(name)
 }

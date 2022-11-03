@@ -44,7 +44,6 @@ private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val preferences by lazy { AppPreferences(requireContext()) }
     private val viewModel: HomeViewModel by viewModel()
     private var fabExpanded = false
 
@@ -78,25 +77,7 @@ class HomeFragment : Fragment() {
             totalChartDescription.textSize = 12f
 
 
-            totalChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
-            incomeChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
-            expensesChart.legend.orientation = Legend.LegendOrientation.HORIZONTAL
 
-            totalChart.legend.isWordWrapEnabled = true
-            incomeChart.legend.isWordWrapEnabled = true
-            expensesChart.legend.isWordWrapEnabled = true
-
-
-            totalChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            totalChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
-
-
-            incomeChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            incomeChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
-
-
-            expensesChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            expensesChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
 
 
 
@@ -122,61 +103,6 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddCategoryDialog())
             }
 
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getExpensesData().collect {
-                    expensesChart.data = it
-                    expensesChart.description = expensesChartDescription
-                    expensesChart.setUsePercentValues(true)
-                    expensesChart.invalidate()
-                }
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getTotalExpenses().collect {
-                    expensesChart.setCenterTextSize(12f)
-                    expensesChart.setDrawCenterText(true)
-                    expensesChart.centerText = "$it ${preferences.getCurrency()}"
-                    expensesChart.setCenterTextColor(Color.BLACK)
-                    expensesChart.invalidate()
-                }
-            }
-
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getIncomeData().collect {
-                    incomeChart.data = it
-                    incomeChart.description = incomesChartDescription
-                    incomeChart.setUsePercentValues(true)
-                    incomeChart.invalidate()
-                }
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getTotalIncome().collect {
-                    incomeChart.setCenterTextSize(12f)
-                    incomeChart.setDrawCenterText(true)
-                    incomeChart.centerText = "$it ${preferences.getCurrency()}"
-                    incomeChart.setCenterTextColor(Color.BLACK)
-                    incomeChart.invalidate()
-                }
-
-            }
-
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getAllData().collect {
-                    totalChart.data = it
-                    totalChart.description = totalChartDescription
-                    totalChart.setUsePercentValues(true)
-                    totalChart.invalidate()
-                }
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.getTotalExpensesAndIncome().collect {
-                    totalChart.setCenterTextSize(12f)
-                    totalChart.setDrawCenterText(true)
-                    totalChart.centerText = "$it ${preferences.getCurrency()}"
-                    totalChart.setCenterTextColor(Color.BLACK)
-                    totalChart.invalidate()
-                }
-
-            }
 
 
 

@@ -13,47 +13,30 @@
         android:background="?colorPrimary">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/charts_container"
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="@dimen/_8sdp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_16sdp"
+            android:backgroundTint="@null"
+            android:padding="8dp"
+            app:cardBackgroundColor="?colorSecondary"
+            app:cardCornerRadius="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/search_quran_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/expenses_chart"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_170sdp"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:layout_weight="1" />
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/income_chart"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_170sdp"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:layout_weight="1" />
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/total_chart"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_170sdp"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:background="@null"
+                android:backgroundTint="@null"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:enabled="true"
+                android:focusable="false" />
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -63,14 +46,14 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_24sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/charts_container">
+            app:layout_constraintTop_toBottomOf="@+id/search_bar">
 
             <LinearLayout
-                android:layout_marginTop="@dimen/_minus10sdp"
                 android:id="@+id/items_place_holder"
                 android:layout_width="@dimen/_300sdp"
                 android:layout_height="@dimen/_300sdp"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_minus10sdp"
                 android:background="@drawable/circle_jungle_green"
                 android:gravity="center"
                 android:orientation="vertical"

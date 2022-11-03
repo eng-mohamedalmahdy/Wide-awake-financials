@@ -7,6 +7,7 @@ import com.lightfeather.wide_awakefinancials.domain.persistence.TransactionsDAO
 import com.lightfeather.wide_awakefinancials.domain.repositories.ExpensesRepository
 import com.lightfeather.wide_awakefinancials.ui.addcategory.AddCategoryViewModel
 import com.lightfeather.wide_awakefinancials.ui.addtransaction.AddTransactionViewModel
+import com.lightfeather.wide_awakefinancials.ui.analysis.AnalysisViewModel
 import com.lightfeather.wide_awakefinancials.ui.home.HomeViewModel
 import com.lightfeather.wide_awakefinancials.ui.insights.InsightsViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -19,6 +20,7 @@ val dataModule = module {
     viewModel { AddCategoryViewModel(get()) }
     viewModel { AddTransactionViewModel(get()) }
     viewModel { InsightsViewModel(get()) }
+    viewModel { AnalysisViewModel(get()) }
 }
 val databaseModule = module {
     fun provideDataBase(application: Application): FinancialTransactionsDatabase {

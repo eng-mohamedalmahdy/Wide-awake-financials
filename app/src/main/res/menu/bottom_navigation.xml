@@ -7,9 +7,9 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/insightsFragment"
+        android:id="@+id/analysisFragment"
         android:icon="@drawable/ic_baseline_insights_24"
-        android:title="@string/insights" />
+        android:title="@string/analysis" />
 
     <item
         android:id="@+id/settingsFragment"

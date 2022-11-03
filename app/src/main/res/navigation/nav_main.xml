@@ -66,6 +66,11 @@
         android:name="com.lightfeather.wide_awakefinancials.ui.insights.InsightsFragment"
         android:label="fragment_insights"
         tools:layout="@layout/fragment_insights" />
+    <fragment
+        android:id="@+id/analysisFragment"
+        android:name="com.lightfeather.wide_awakefinancials.ui.analysis.AnalysisFragment"
+        android:label="fragment_analysis"
+        tools:layout="@layout/fragment_analysis" />
 
 
 </navigation>
